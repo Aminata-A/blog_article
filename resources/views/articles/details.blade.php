@@ -8,38 +8,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <style>
-  h1{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: blue;
-    margin-bottom: 2em;
-    font-weight: bold;
-  }
+ 
 </style>
 <body>
-<h1>Mes articles</h1>
 
   <div class="container">
       <div class="row">
 
-          @foreach ($mon_blog as $article)
-              
               <div class="col-sm-6 mb-3 mb-sm-0">
                   <div class="card" >
                       <img class="card-img-top" src="{{$article->image_path}}" alt="Card image cap">
                       <div class="card-body d-flex flex-column">
                           <h5 class="card-title">{{$article->titre}}</h5>
                           <p class="card-text">{{$article->description}}</p>
-                          <div class="d-flex">
-                          <a href="{{ route('articles.details', ['id' => $article->id]) }}" class="btn btn-primary">Go somewhere</a>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                          <a href="#" class="btn btn-danger">Go somewhere</a>
-                        </div>
                       </div>
                   </div>
               </div>   
-          @endforeach
 
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
