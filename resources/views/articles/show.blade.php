@@ -17,7 +17,7 @@
 
               <div class="col-sm-6 mb-3 mb-sm-0">
                   <div class="card" >
-                      <img class="card-img-top" src="{{$article->image_path}}" alt="Card image cap">
+                      <img class="card-img-top" src="{{ Storage::url('public/images/' . $article->image_path) }}" alt="Card image cap">
                       <div class="card-body d-flex flex-column">
                           <h5 class="card-title">{{$article->titre}}</h5>
                           <p class="card-text">{{$article->description}}</p>

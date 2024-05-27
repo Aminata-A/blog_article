@@ -16,9 +16,14 @@
     margin-bottom: 2em;
     font-weight: bold;
   }
+  .d-flex{
+    justify-content: space-around;
+  }
 </style>
 <body>
 <h1>Mes articles</h1>
+<!-- Dans n'importe quelle vue où vous souhaitez afficher le bouton -->
+<a href="{{ route('articles.create') }}" class="btn btn-primary">Créer un nouvel article</a>
 
   <div class="container">
       <div class="row">
@@ -32,9 +37,9 @@
                           <h5 class="card-title">{{$article->titre}}</h5>
                           <p class="card-text">{{$article->description}}</p>
                           <div class="d-flex">
-                          <a href="{{ route('articles.details', ['id' => $article->id]) }}" class="btn btn-primary">Go somewhere</a>
+                          <a href="{{ route('articles.show', ['id' => $article->id]) }}" class="btn btn-primary">Go somewhere</a>
                           <a href="#" class="btn btn-primary">Go somewhere</a>
-                          <a href="#" class="btn btn-danger">Go somewhere</a>
+                          <a href="{{ route('articles.delete', ['id' => $article->id]) }}" class="btn btn-danger">Go somewhere</a>
                         </div>
                       </div>
                   </div>
