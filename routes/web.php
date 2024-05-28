@@ -20,7 +20,8 @@ Route::get('article/create', [ArticleController::class, 'create'])->name('articl
 Route::post('articles/store', [ArticleController::class, 'store'])->name('articles.store');
 
 // Route pour mettre à jour un article
-Route::put('articles/{id}', [ArticleController::class, 'update'])->name('articles.update');
+Route::get('articles/{id}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+Route::post('articles/update/{id}', [ArticleController::class, 'update'])->name('articles.update');
 
 // Route pour supprimer un article
-Route::delete('articles/{id}', [ArticleController::class, 'delete'])->name('articles.delete');
+Route::delete('articles/{id}', [ArticleController::class, 'destroy'])->name('articles.destroy');

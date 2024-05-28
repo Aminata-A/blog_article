@@ -25,7 +25,7 @@
 
         <div class="mb-3">
             <label for="titre" class="form-label">Titre</label>
-            <input type="text" class="form-control" id="title" name="titre" value="{{ old('titre') }}" required>
+            <input type="text" class="form-control" id="titre" name="titre" value="{{ old('titre') }}" required>
         </div>
 
         <div class="mb-3">
@@ -35,7 +35,7 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
-            <input class="form-control" type="file" id="image" name="image_path" accept="image/*">
+            <input class="form-control" type="file" id="image" name="image_path" >
         </div>
 
         <div class="form-check mb-3">

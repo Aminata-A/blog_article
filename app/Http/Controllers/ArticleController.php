@@ -31,26 +31,39 @@ class ArticleController extends Controller
         */
         public function store(Request $request)
         {
-            $request->validate([
-                'titre' => 'required|string|max:255',
-                'description' => 'required|string',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            
-            $article = new Article;
-            $article->titre = $request->titre;
-            $article->description = $request->description;
-            $article->featured = $request->has('featured');
-            $article->created_at = now();
-            
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('images', 'public');
-                $article->image_path = $imagePath;
+           // Validation des champs de la requête
+        $request->validate([
+            'titre' => 'required',
+            'description' => 'required',
+            'image_path' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'featured' => 'boolean',
+
+        ]);
+        // Initialisation de la variable pour le chemin de l'image
+        $image = null;
+        // Vérifier si un fichier image est uploadé
+        if ($request->hasFile('image_path')) {
+            // Stocker l'image dans le répertoire 'public/blog'
+            $chemin_image = $request->file('image_path')->store('public/images');
+
+            // Vérifier si le chemin de l'image est bien généré
+            if (!$chemin_image) {
+                return redirect()->back()->with('error', "Erreur lors du téléchargement de l'image.");
             }
+            // Récupérer le nom du fichier de l'image
             
-            $article->save();
-            
-            return redirect()->route('articles.index')->with('success', 'Article created successfully.');
+            $image = basename($chemin_image);
+        }
+
+        // Créer un nouvel article
+        $article = new Article();
+        $article->titre = $request->titre;
+        $article->description = $request->description;
+        $article->image_path = $image; // Nom du fichier de l'image
+        $article->featured = $request->featured;
+        $article->save();
+
+        return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
         }
         
         /**
@@ -68,24 +81,43 @@ class ArticleController extends Controller
         */
         public function edit(string $id)
         {
-            //
+
+            $article = Article::findOrFail($id);            
+            return view('articles.edit', compact('article'));
         }
         
         /**
         * Update the specified resource in storage.
         */
-        public function update(Request $request, string $id)
+        public function update(Request $request, $id)
         {
-            //
+            
+                $request->validate([
+                    'titre' => 'required|string|max:255',
+                    'description' => 'required|string',
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $article = Article::findOrFail($id);
+                $article->titre = $request->titre;
+                $article->description = $request->description;
+                $article->featured = $request->has('featured');
+        
+                if ($request->hasFile('image')) {
+                    $imagePath = $request->file('image')->store('public/images');
+                    $article->image_path = $imagePath;
+                }
+        
+                $article->save();
+        
+                return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
         }
         
         /**
         * Remove the specified resource from storage.
         */
-        public function delete(Article $article)
+        public function destroy(Article $article)
         {
             $article->delete();
             return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
         }
     }
-    

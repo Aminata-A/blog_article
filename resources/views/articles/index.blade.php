@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,30 +24,38 @@
 <body>
 <h1>Mes articles</h1>
 <!-- Dans n'importe quelle vue où vous souhaitez afficher le bouton -->
+@foreach ($mon_blog as $article)
+
 <a href="{{ route('articles.create') }}" class="btn btn-primary">Créer un nouvel article</a>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{ Storage::url('public/images/' . $article->image_path) }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{$article->titre}}</h5>
+    <p class="card-text">{{$article->description}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <a href="{{ route('articles.show', ['id' => $article->id]) }}" class="card-link">voir plus</a>
+    <li class="list-group-item">{{$article->featured}}</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+  </ul>
+  <div class="card-body d-flex">
+    <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-danger">Modifer</a>
+    <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-danger">Supprimer</button>
+    </form>
+</div>
 
-  <div class="container">
-      <div class="row">
 
-          @foreach ($mon_blog as $article)
               
-              <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card" >
-                      <img class="card-img-top" src="{{$article->image_path}}" alt="Card image cap">
-                      <div class="card-body d-flex flex-column">
-                          <h5 class="card-title">{{$article->titre}}</h5>
-                          <p class="card-text">{{$article->description}}</p>
-                          <div class="d-flex">
-                          <a href="{{ route('articles.show', ['id' => $article->id]) }}" class="btn btn-primary">Go somewhere</a>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                          <a href="{{ route('articles.delete', ['id' => $article->id]) }}" class="btn btn-danger">Go somewhere</a>
-                        </div>
-                      </div>
-                  </div>
-              </div>   
+               
           @endforeach
 
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 </html>
+
+
+
